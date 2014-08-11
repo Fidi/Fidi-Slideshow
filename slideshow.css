@@ -1,0 +1,204 @@
+@charset "UTF-8";
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2014 Kevin Fiedler
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+body {
+	background-color: #666;	
+	overflow: hidden;
+	
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+#title {
+	position: absolute;
+	font-family: "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-weight: 100;
+	color: #FFF;
+	top: 1vh;
+	bottom: 1vh;
+	left: 2vh; 
+	right: 2vh;
+}
+
+#year {
+	position: absolute;
+	font-family: "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-weight: 100;
+	color: #FFF;
+	top: 1vh;
+	bottom: 1vh;
+	right: 2vh; 
+	width: 20vw;
+	text-align: right;
+}
+
+#header {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	height: 7vh;
+	background-color: #333;
+	box-shadow: 0 0 10px #333;
+}
+
+#main {
+	position: absolute;
+	padding: 20px;
+	left: 0px;
+	right: 0px;
+	top: 7vh;
+	bottom: 14vh;	
+	text-align: center;	
+}
+
+#main-container {
+	position: absolute;
+	top: 5vh;
+	left: 5vw;
+	height: 70vh;
+	width: 90vw;
+}
+
+#main-image {
+	max-height: 100%;	
+	max-width: 90%;
+	/*height: 70vh;*/
+	box-shadow: 0 0 20px #333;
+}
+
+#left {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	background-color: #333;
+	border-radius: 10px;
+	color: #FFF;
+	top: 50%;
+	margin-top: -10px;
+	left: 20px;
+	text-align: center;
+	font-weight: 900;
+	
+	display: none;
+}
+
+#right {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	background-color: #333;
+	border-radius: 10px;
+	color: #FFF;
+	top: 50%;
+	margin-top: -10px;
+	right: 20px;
+	text-align: center;
+	font-weight: 900;
+}
+
+#description {
+	position: absolute;
+	background-color: #222;
+	left: 0px;
+	right: 0px;
+	bottom: 10vh;
+	height: 4vh;
+}
+
+#description-text {
+	position: absolute;
+	font-family: "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-weight: 100;
+	color: #CCC;
+	top: 1vh;
+	bottom: 1vh;
+	left: 2vh; 
+	right: 100px;
+	overflow: hidden;
+}
+
+#description-counter {
+	position: absolute;
+	font-family: "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-weight: 100;
+	color: #CCC;
+	top: 1vh;
+	bottom: 1vh;
+	right: 2vh;
+	width: 100px;
+	text-align:right;
+}
+
+#footer {
+	position: absolute;
+	background-color: #333;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	height: 10vh;
+	overflow-x: auto;	
+	-webkit-overflow-scrolling: touch;	
+}
+
+#footer-wrapper {
+	position: relative;
+	padding: 1vh;
+	height: 8vh;
+	width: auto;
+}
+
+.thumb {
+	width: 8vh;
+	height: 8vh;
+	overflow: hidden;	
+	float: left;
+	margin-left: 1vh;
+	box-shadow: 0 0 5px #CCC;
+	text-align: center;
+}
+
+.thumb > img {
+	position: relative;
+	min-height: 8vh;
+	min-width: 8vh;	
+	max-height: 12vh;
+	max-width: 12vh;	
+	left: 50%;
+	margin-left: -100%;
+}
+
+.fitHeight, .fitWidth {
+	font-size: 300px;	
+}
+
+h1 {
+	font-family: "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-weight: 100;
+	color: #FFF;
+}
