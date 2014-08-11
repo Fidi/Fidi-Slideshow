@@ -6,7 +6,7 @@
 	<path>Sample/</path>
 	
 	<images>
-		<count>19</count>
+		<count>18</count>
 		
    		<image id="1">
      		<name>DSCF0280.jpg</name>
@@ -18,82 +18,82 @@
      		<description>Blume auf Murano mit Venedig im Hintergrund</description>
    		</image>
 		
-		<image id="4">
+		<image id="3">
      		<name>DSCF0432.jpg</name>
      		<description>Glasbläserei mit Turm im Hintergrund</description>
    		</image>
 		
-		<image id="5">
+		<image id="4">
      		<name>DSCF0698.jpg</name>
      		<description>Blick von der Rialto-Brücke</description>
    		</image>
 		
-		<image id="6">
+		<image id="5">
      		<name>DSCF0707.jpg</name>
      		<description>Rialto-Brücke</description>
    		</image>
 		
-		<image id="7">
+		<image id="6">
      		<name>DSCF0740.jpg</name>
      		<description>Statue am Ufer nahe Santa Maria della Salute</description>
    		</image>
 		
-		<image id="8">
+		<image id="7">
      		<name>DSCF0750.jpg</name>
      		<description>Campanile - Der Markus-Turm</description>
    		</image>
 		
-		<image id="9">
+		<image id="8">
      		<name>DSCF0777.jpg</name>
      		<description>Löwe San Marco</description>
    		</image>
 		
-		<image id="10">
+		<image id="9">
      		<name>DSCF0843.jpg</name>
      		<description>Blick auf die Prokuratien vom Markus-Turm </description>
    		</image>
 		
-		<image id="11">
+		<image id="10">
      		<name>DSCF0847.jpg</name>
      		<description>Blick auf Santa Maria della Salute vom Markus-Turm</description>
    		</image>
 		
-		<image id="12">
+		<image id="11">
      		<name>DSCF0870.jpg</name>
      		<description>Dieser Turm nahe Santa Maria della Salute</description>
    		</image>
 		
-		<image id="13">
+		<image id="12">
      		<name>DSCF0922.jpg</name>
      		<description>Im Markus-Dom</description>
    		</image>
 		
-		<image id="14">
+		<image id="13">
      		<name>DSCF1040.jpg</name>
      		<description>Blick von der Loge in den Markus-Dom</description>
    		</image>
 		
-		<image id="15">
+		<image id="14">
      		<name>DSCF1060.jpg</name>
      		<description>Im Markus-Dom</description>
    		</image>
 		
-		<image id="16">
+		<image id="15">
      		<name>DSCF1233.jpg</name>
      		<description>Sonnenuntergang in Venedig</description>
    		</image>
 		
-		<image id="17">
+		<image id="16">
      		<name>DSCF1256.jpg</name>
      		<description>Gondelfahrt</description>
    		</image>
 		
-		<image id="18">
+		<image id="17">
      		<name>DSCF1294.jpg</name>
      		<description>Blick von San Marco am Abend</description>
    		</image>
 		
-		<image id="19">
+		<image id="18">
      		<name>DSCF1322.jpg</name>
      		<description>Der Canale Grande bei Nacht</description>
    		</image>

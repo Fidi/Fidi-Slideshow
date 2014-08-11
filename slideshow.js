@@ -77,9 +77,9 @@ function initSlideshow(fFileName) {
 			
 			// load the first image
 			LoadImage(fFileName, 0);
-			var thumbWidth = (count-1) * ((document.height * 9)/100);
+			var thumbWidth = count * ((document.height * 9)/100);
 			setFooterPosition(thumbWidth)
-			$("#footer-wrapper").css("width", (count-1) * 9 + "vh");
+			$("#footer-wrapper").css("width", count * 9 + "vh");
 		},
 		
 	error: function() {
@@ -134,7 +134,7 @@ function LoadImage(fFileName, fID) {
 				
 				// if necessary scroll the footer to the current thumb
 				if (!isInView("img" + fID)) {
-					$("#footer").scrollLeft((fID-1) * (10 * document.height) / 100);
+					$("#footer").scrollLeft(document.getElementById("img" + (fID-1)).offsetLeft);
 				}
 			});
 		},
@@ -215,7 +215,7 @@ function isInView(elementID) {
 	var parent = document.getElementById("footer");
 	var twopercent = ((document.height * 2) / 100) + 10;
 	
-	if (element.offsetLeft <= parent.scrollLeft) return false;
+	if (element.offsetLeft - element.width <= parent.scrollLeft) return false;
 	if (element.offsetLeft >= parent.scrollLeft + document.width - twopercent) return false;
 	
 	return true;
