@@ -77,9 +77,9 @@ function initSlideshow(fFileName) {
 			
 			// load the first image
 			LoadImage(fFileName, 0);
-			var thumbWidth = count * ((document.height * 10)/100);
+			var thumbWidth = (count-1) * ((document.height * 9)/100);
 			setFooterPosition(thumbWidth)
-			$("#footer-wrapper").css("width", count * 9 + "vh");
+			$("#footer-wrapper").css("width", (count-1) * 9 + "vh");
 		},
 		
 	error: function() {

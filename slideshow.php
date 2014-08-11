@@ -27,13 +27,13 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.js"></script>
-    <script src="slideshow.js"></script>
-    <link type="text/css" rel="stylesheet" href="slideshow.css" />
+	<script src="slideshow.js"></script>
+	<link type="text/css" rel="stylesheet" href="slideshow.css" />
     
     
-    <script type="text/javascript">
+	<script type="text/javascript">
 		<!--
 		// define all variables:
 		var $CurrentImage = 1;
@@ -96,7 +96,12 @@
 			}
 			//preload yes/no ?
 			if((args.length >= 2) && (args[1] == "preload")) {
-				preload = true;
+				if (navigator.userAgent.indexOf("MSIE") != -1) {
+					// preload does not work in Internet Explorer
+					preload = false;	
+				} else {
+					preload = true;
+				}
 			}
 			
 			
