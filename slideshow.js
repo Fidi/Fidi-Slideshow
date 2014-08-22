@@ -20,10 +20,11 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+ 
+ 
 
 
-
-// init slideshow: loading thumbs and 
+// init slideshow: loading thumbs and first image
 function initSlideshow(fFileName) {
 	$.ajax({
 		type: "GET",
@@ -77,9 +78,10 @@ function initSlideshow(fFileName) {
 			
 			// load the first image
 			LoadImage(fFileName, 0);
-			var thumbWidth = count * ((document.height * 9)/100);
-			setFooterPosition(thumbWidth)
-			$("#footer-wrapper").css("width", count * 9 + "vh");
+			var thumbWidth = count * ((window.innerHeight * 9)/100);
+			$("#footer-wrapper").css("width", ((count * 9) + 1) + "vh");
+			// DOES NOT WORK IN FIREFOX OR CHROME (OPERA AND IE NOT TESTED)
+			setFooterPosition(thumbWidth);
 		},
 		
 	error: function() {
@@ -133,7 +135,7 @@ function LoadImage(fFileName, fID) {
 
 				
 				// if necessary scroll the footer to the current thumb
-				if (!isInView("img" + fID)) {
+				if (!isInView("img" + (fID-1))) {
 					$("#footer").scrollLeft(document.getElementById("img" + (fID-1)).offsetLeft);
 				}
 			});
@@ -187,6 +189,20 @@ function handleKeypress(fFileName, key) {
 }
 
 
+
+// returns true if requested element ist currently in viewport
+function isInView(elementID) {
+	var element = document.getElementById(elementID);
+	var parent = document.getElementById("footer");
+	var twopercent = ((document.height * 2) / 100) + 10;
+	
+	if (element.offsetLeft <= parent.scrollLeft) return false;
+	if (element.offsetLeft + element.width >= parent.scrollLeft + document.width) return false;
+	
+	return true;
+}
+
+
 // adjust image margin top to center it in the viewport
 function setImagePosition() {
 	var imgHeight = $("#main-image").height();
@@ -198,28 +214,16 @@ function setImagePosition() {
 	}
 }
 
-function setFooterPosition(thumbWidth) {
-	var $footerDiff = thumbWidth - $(document).width();
+// if footer-wrapper is smaller then window width center it
+function setFooterPosition(thumbsWidth) {
+	var $footerDiff = thumbsWidth - window.innerWidth;
 	if ($footerDiff < 0) {
-		$("#footer-wrapper").css("margin-left", (-1*$footerDiff)/2);	
+		$("#footer-wrapper").css("margin-left", ((-1*$footerDiff)/2));	
 	} else {
 		$("#footer-wrapper").css("margin-left", 0);	
 	}
 }
 
-
-
-// returns true if requested element ist currently in viewport
-function isInView(elementID) {
-	var element = document.getElementById(elementID);
-	var parent = document.getElementById("footer");
-	var twopercent = ((document.height * 2) / 100) + 10;
-	
-	if (element.offsetLeft - element.width <= parent.scrollLeft) return false;
-	if (element.offsetLeft >= parent.scrollLeft + document.width - twopercent) return false;
-	
-	return true;
-}
 
 
 // sets the size to maximum available size of the div height without word wrapping

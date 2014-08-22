@@ -27,10 +27,40 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     
+    <?php
+		function check_mobile() {
+		  $agents = array(
+			'Windows CE', 'Pocket', 'Mobile',
+			'Portable', 'Smartphone', 'SDA',
+			'PDA', 'Handheld', 'Symbian',
+			'WAP', 'Palm', 'Avantgo',
+			'cHTML', 'BlackBerry', 'Opera Mini',
+			'Nokia'
+		  );
+		
+		  // Prüfen der Browserkennung
+		  for ($i=0; $i<count($agents); $i++) {
+			if(isset($_SERVER["HTTP_USER_AGENT"]) && strpos($_SERVER["HTTP_USER_AGENT"], $agents[$i]) !== false)
+			  return true;
+		  }
+		  return false;
+		}
+	?>
+
+    
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.js"></script>
 	<script src="slideshow.js"></script>
-	<link type="text/css" rel="stylesheet" href="slideshow.css" />
+    
+    <?php
+		$mobile = check_mobile();
+		
+		if ($mobile) {
+			echo '<script src="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.js"></script>';
+			echo '<link type="text/css" rel="stylesheet" href="slideshow_mobile.css" />';
+		} else {
+			echo '<link type="text/css" rel="stylesheet" href="slideshow.css" />';
+		}
+	?>
     
     
 	<script type="text/javascript">
@@ -64,8 +94,12 @@
             <h1>Loading Slideshow...</h1>
         </div>
         
-        <a href="javascript: void(0);" onclick="javascript: PreviousImage(fileName);"><div id="left"><strong>&lsaquo;</strong></div></a>
-        <a href="javascript: void(0);" onclick="javascript: NextImage(fileName);"><div id="right"><strong>&rsaquo;</strong></div></a>
+        <?php
+			if (!$mobile) {
+				echo '<a href="javascript: void(0);" onclick="javascript: PreviousImage(fileName);"><div id="left"><strong>&lsaquo;</strong></div></a>';
+        		echo '<a href="javascript: void(0);" onclick="javascript: NextImage(fileName);"><div id="right"><strong>&rsaquo;</strong></div></a>';
+			}
+		?>
    	</div>
     
     
@@ -84,41 +118,19 @@
     
     
     <script type="text/javascript">
-		<!--	
-			// extract the hash values:
-			var args = document.location.hash.substr(1).split('&');
-			// name of the xml file
-			if ((args.length >= 1) && (args[0] != "")) {
-				fileName = args[0];
-			} else {
-				$("#main-container").html("<center><h1>No slideshow specified!</h1></center>");	
-				throw "Error: No slideshow submitted.";
-			}
-			//preload yes/no ?
-			if((args.length >= 2) && (args[1] == "preload")) {
-				if (navigator.userAgent.indexOf("MSIE") != -1) {
-					// preload does not work in Internet Explorer
-					preload = false;	
-				} else {
-					preload = true;
+		<!--			 
+			 <?php
+			 	if ($mobile) {
+					echo '	// register mobile touch gestures
+							$("#main").on("swipeleft", function(){
+								NextImage(fileName);
+							});';
+			
+					echo '	$("#main").on("swiperight", function(){
+								PreviousImage(fileName);
+							});';	
 				}
-			}
-			
-			
-			// adjust text font size
-			$(".fitHeight").fitToHeight();		
-			$(".fitWidth").fitToHeight();	
-			
-			 
-			 
-			// register mobile touch gestures
-			$("#main").on("swipeleft", function(){
-				NextImage(fileName);
-			});
-			
-			$("#main").on("swiperight", function(){
-				PreviousImage(fileName);
-			});	
+			?>
 			
 			
 			// adjust font size and image position on resize
@@ -131,12 +143,36 @@
 			});
 			
 			
-			//startup script: Load the XML file, create the thumb view und load first image into viewport
-			if (fileName != "") {
-				initSlideshow(fileName);
-			}
+			$(document).ready(function() {
+				// extract the hash values:
+				var args = document.location.hash.substr(1).split('&');
+				// name of the xml file
+				if ((args.length >= 1) && (args[0] != "")) {
+					fileName = args[0];
+				} else {
+					$("#main-container").html("<center><h1>No slideshow specified!</h1></center>");	
+					throw "Error: No slideshow submitted.";
+				}
+				//preload yes/no ?
+				if((args.length >= 2) && (args[1] == "preload")) {
+					if (navigator.userAgent.indexOf("MSIE") != -1) {
+						// preload does not work in Internet Explorer
+						preload = false;	
+					} else {
+						preload = true;
+					}
+				}
+				
 			
-			//TODO: set footer position after slideshow start to center it the thumb width is smaller than the window width			
+				//startup script: Load the XML file, create the thumb view und load first image into viewport
+				if (fileName != "") {
+					initSlideshow(fileName);
+				}
+				
+				// adjust text font size
+				$(".fitHeight").fitToHeight();		
+				$(".fitWidth").fitToHeight();	
+            });	
         //-->
 	</script>
 </body>
