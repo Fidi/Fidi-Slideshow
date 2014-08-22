@@ -176,14 +176,10 @@ function NextImage(fFileName) {
 }
 
 // use left and right key to show previous/next image
-function handleKeypress(fFileName, key) {
-	if (!key) {
-		key = window.event;
-	}
-	
-	if (key.keyCode == 39) {
+function handleKeypress(fFileName, keyCode) {
+	if (keyCode == 39) {
 		NextImage(fFileName);
-	} else if (key.keyCode == 37) {
+	} else if (keyCode == 37) {
 		PreviousImage(fFileName);
 	}
 }

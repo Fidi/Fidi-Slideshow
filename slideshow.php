@@ -79,7 +79,7 @@
 	<title>Slideshow</title>
 </head>
 
-<body onkeydown="javascript: handleKeypress(fileName);">
+<body>
 	<div id="header">
     	<div class="fitHeight" id="title">&nbsp;</div>
         <div class="fitHeight" id="year">&nbsp;</div>
@@ -141,6 +141,14 @@
 				setImagePosition();
 				setFooterPosition($("#footer-wrapper").width());
 			});
+			
+			
+			
+			$(document).keydown(function(event) {
+				handleKeypress(fileName, event.keyCode);
+				event.preventDefault();
+			});
+			
 			
 			
 			$(document).ready(function() {
