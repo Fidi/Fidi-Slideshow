@@ -138,8 +138,7 @@ function LoadImage(fID) {
 				}
 		
 		
-				// Check all images to find the matching id
-				// Note: here we need fID+1 because in the XML file we start counting at 1
+				// Search the XML file for the matching ID
 				$(xml).find("image[id='" + (++fID) + "']").each(function(){
 					
 					if (!preload) {

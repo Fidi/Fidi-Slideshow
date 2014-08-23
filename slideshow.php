@@ -34,19 +34,17 @@
 		// is rendered bevor parsed so that the output file size is smaller. Important
 		// for mobile websites where every bit counts ;) 
 		function check_mobile() {
-		  $agents = array(
-			'Windows CE', 'Pocket', 'Mobile',
-			'Portable', 'Smartphone', 'SDA',
-			'PDA', 'Handheld', 'Symbian',
-			'WAP', 'Palm', 'Avantgo',
-			'cHTML', 'BlackBerry', 'Opera Mini',
-			'Nokia'
-		  );
-			  for ($i=0; $i<count($agents); $i++) {
-			if(isset($_SERVER["HTTP_USER_AGENT"]) && strpos($_SERVER["HTTP_USER_AGENT"], $agents[$i]) !== false)
-			  return true;
-		  }
-		  return false;
+		  	$agents = array('Windows CE', 'Pocket', 'Mobile',
+							'Portable', 'Smartphone', 'SDA',
+							'PDA', 'Handheld', 'Symbian',
+							'WAP', 'Palm', 'Avantgo',
+							'cHTML', 'BlackBerry', 'Opera Mini',
+							'Nokia');
+			for ($i=0; $i<count($agents); $i++) {
+				if(isset($_SERVER["HTTP_USER_AGENT"]) && strpos($_SERVER["HTTP_USER_AGENT"], $agents[$i]) !== false)
+					return true;
+		  	}
+		  	return false;
 		}
 	?>
 
@@ -104,7 +102,7 @@
             <h1>Loading Slideshow...</h1>
         </div>
         
-        <?php
+		<?php
 			// in the desktop version show left / right arrow next to the images
 			// mobile version somewhere in the footer!
 			if (!$mobile) {
