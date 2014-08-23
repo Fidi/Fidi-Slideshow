@@ -83,7 +83,7 @@ function initSlideshow(fFileName) {
 				
 				// load the thumb file into the footer:
 				// since this is a little cryptic: important is the onclick event with the correct id (that is the original id-1) and the correct file path (in my case I added a folder "thumbs/"
-				var text = '<a href="javascript: void(0);" title="' + $imgDes + '" onclick="javascript: LoadImage(\'' + fFileName + '\', \'' + $id + '\');"><div class="thumb"><img id="img' + $id + '" src="' + path + "thumbs/" + $(this).find("name").text() + '" /></div></a>';
+				var text = '<a href="javascript: void(0);" title="' + $imgDes + '" onclick="javascript: LoadImage(' + $id + ');"><div class="thumb"><img id="img' + $id + '" src="' + path + "thumbs/" + $(this).find("name").text() + '" /></div></a>';
 				$("#footer-wrapper").append(text);
 			});
 			
@@ -156,9 +156,9 @@ function LoadImage(fID) {
 						// Preload is active:
 						// just show the preloaded image	
 						$("#main-container").html(pictures[fID-1]);
-						setImagePosition();	
 					}
 					
+					setImagePosition();	
 	
 					// display description line
 					$("#description-text").html($(this).find("description").text());
