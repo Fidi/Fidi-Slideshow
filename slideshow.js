@@ -24,7 +24,9 @@
  
 
 
-// init slideshow: loading thumbs and first image
+// Parse the XML file submitted in fFileName:
+// - Load name, year and thumbs
+// - Show first image
 function initSlideshow(fFileName) {
 	$.ajax({
 		type: "GET",
@@ -32,56 +34,69 @@ function initSlideshow(fFileName) {
 		dataType: "xml",
 		success: function(xml) {
 			
-			// Print title and year on top
-			var $title = $(xml).find("title").text();
-			
+			// Starting with the title: print it in the header
+			// and change document title tag:
+			var $title = $(xml).find("title").text();		
 			$("#title").html($title);
+			document.title = "Slideshow: " + $title;
+			
+			// Print year in header
 			$("#year").html($(xml).find("year").text());
 			
-			// save path for later use
+			
+			// The path will be used a lot later when loading the thumbs:
 			path = $(xml).find("path").text()
 			
-			// print the description line
+			
+			// Init an "empty" description line: this will be filled
+			// when calling LoadImage
 			$("#description-text").html("&nbsp;");
-			$("#current-img").html("1");
+			$("#current-img").html("-");
 			count = $(xml).find("count").text();
 			$("#count-img").html(count);
 			
-			// if active preload then create empty array
+			
+			// if preload is active then create an empty array
+			// that will store all images
 			if(preload) {
 				pictures = new Array(count - 1);	
 			}
 			
-						
+			
+			// This loop runs over every <Image>-Tag in the XML file		
 			$(xml).find("image").each(function(){
 				
+				// the id needs to be decremented since the array starts at 0
 				var $id = $(this).attr("id")-1;
 				var $imgDes = $(this).find("description").text(); 
 				
-				// cache all images if preload is active
+				// if preload is active then store the image in the array
 				if(preload) {
 					var $imgSrc = path + "images/" + $(this).find("name").text();
 					
+					// alloc image and store it in the array
 					pictures[$id] = new Image;
 					pictures[$id].src = $imgSrc;
 					pictures[$id].alt = "main-image"
-					pictures[$id].id = "main-image";							
-					// adjust image position onLoad
-					pictures[$id].onload = function() { setImagePosition(); }
-
+					pictures[$id].id = "main-image";
 				}
 				
-				// load all images in footer
+				// load the thumb file into the footer:
+				// since this is a little cryptic: important is the onclick event with the correct id (that is the original id-1) and the correct file path (in my case I added a folder "thumbs/"
 				var text = '<a href="javascript: void(0);" title="' + $imgDes + '" onclick="javascript: LoadImage(\'' + fFileName + '\', \'' + $id + '\');"><div class="thumb"><img id="img' + $id + '" src="' + path + "thumbs/" + $(this).find("name").text() + '" /></div></a>';
 				$("#footer-wrapper").append(text);
 			});
 			
-			// load the first image
-			LoadImage(fFileName, 0);
+			// all thumbs loaded:
+			// now set the thumb wrapper width to the correct size:
 			var thumbWidth = count * ((window.innerHeight * 9)/100);
 			$("#footer-wrapper").css("width", ((count * 9) + 1) + "vh");
-			// DOES NOT WORK IN FIREFOX OR CHROME (OPERA AND IE NOT TESTED)
+			// if necessary center the thumb-wrapper
 			setFooterPosition(thumbWidth);
+			
+			
+			// finally load the first image (starting @ 0)
+			LoadImage(0);
 		},
 		
 	error: function() {
@@ -94,100 +109,96 @@ function initSlideshow(fFileName) {
 
 
 
-// load the image with number fID
-function LoadImage(fFileName, fID) {
-	id = fID;
-	
+// Load the requested image into viewport:
+// - fID is the number image (starting at 0)
+function LoadImage(fID) {
 	$.ajax({
 		type: "GET",
-		url: fFileName + ".xml",
+		url: fileName + ".xml",
 		dataType: "xml",
 		success: function(xml) {
-			// find matching image:
-			$(xml).find("image[id='" + (++fID) + "']").each(function(){
+			
+			// check if fID is in range
+			if ((fID >= 0) && (fID < count)) {
 				
-				$CurrentImage = fID-1;
+				// set global varialbe to new requested ID
+				$CurrentImage = fID;
 				
-				// load the image and description
-				var imgDes = $(this).find("description").text(); 
-				
-				
-				if (!preload) {
-					// load and show image:				 
-					// create new Image (necessary to adjust position in webkit browsers)
-					var cachedImg = new Image;
-					cachedImg.src = path + "images/" + $(this).find("name").text();
-					cachedImg.alt = "main-image"
-					cachedImg.id = "main-image";							
-					// adjust image position onLoad
-					cachedImg.onload = function() { setImagePosition(); }								
-					// finally print image
-					$("#main-container").html(cachedImg);
+				// if we show the first image then hide the previousImage Button
+				if(fID == 0) {
+					$("#left").css("display", "none");
 				} else {
-					// just show the preloaded image	
-					$("#main-container").html(pictures[fID-1]);
-					setImagePosition();	
+					$("#left").css("display", "block");	
 				}
-
-				// display description line
-				$("#description-text").html(imgDes);
-				$("#current-img").html(fID);
-
-				
-				// if necessary scroll the footer to the current thumb
-				if (!isInView("img" + (fID-1))) {
-					$("#footer").scrollLeft(document.getElementById("img" + (fID-1)).offsetLeft);
+				// if we show the last image then hide the nextImage Button
+				if(fID == count-1) {
+					$("#right").css("display", "none");
+				} else {
+					$("#right").css("display", "block");	
 				}
-			});
+		
+		
+				// Check all images to find the matching id
+				// Note: here we need fID+1 because in the XML file we start counting at 1
+				$(xml).find("image[id='" + (++fID) + "']").each(function(){
+					
+					if (!preload) {
+						// Preload is not active:	 
+						// create new Image (necessary to adjust position in webkit browsers)
+						var cachedImg = new Image;
+						cachedImg.src = path + "images/" + $(this).find("name").text();
+						cachedImg.alt = "main-image"
+						cachedImg.id = "main-image";							
+						// adjust image position onLoad
+						cachedImg.onload = function() { setImagePosition(); }								
+						// finally show image
+						$("#main-container").html(cachedImg);
+					} else {
+						// Preload is active:
+						// just show the preloaded image	
+						$("#main-container").html(pictures[fID-1]);
+						setImagePosition();	
+					}
+					
+	
+					// display description line
+					$("#description-text").html($(this).find("description").text());
+					$("#current-img").html(fID);
+	
+					
+					// if necessary scroll the footer to the current thumb
+					if (!thumbIsVisible("img" + (fID-1))) {
+						$("#footer").scrollLeft(document.getElementById("img" + (fID-1)).offsetLeft);
+					}
+				});
+			} else {
+				throw "Error: Invalid image id submitted!";
+			}
 		},
 		error: function() {
 			throw "Error: Loading image or XML file failed.";
 		}
 		
 	});
-	
-	// show or hide left button
-	if(fID == 0) {
-		$("#left").css("display", "none");
-	} else {
-		$("#left").css("display", "block");	
-	}
-		
-	// show or hide right button
-	if(fID == count-1) {
-		$("#right").css("display", "none");
-	} else {
-		$("#right").css("display", "block");	
-	}
-	
 }
 
 
-function PreviousImage(fFileName) {
+function PreviousImage() {
 	if ($CurrentImage >= 1) {
-		LoadImage(fFileName, --$CurrentImage);
+		LoadImage(--$CurrentImage);
 	}
 }
 
-function NextImage(fFileName) {
+function NextImage() {
 	if ($CurrentImage < count-1) {
-		LoadImage(fFileName, ++$CurrentImage);	
-	}
-}
-
-// use left and right key to show previous/next image
-function handleKeypress(fFileName, keyCode) {
-	if (keyCode == 39) {
-		NextImage(fFileName);
-	} else if (keyCode == 37) {
-		PreviousImage(fFileName);
+		LoadImage(++$CurrentImage);	
 	}
 }
 
 
 
 // returns true if requested element ist currently in viewport
-function isInView(elementID) {
+function thumbIsVisible(elementID) {
 	var element = document.getElementById(elementID);
 	var parent = document.getElementById("footer");
 	var twopercent = ((document.height * 2) / 100) + 10;
